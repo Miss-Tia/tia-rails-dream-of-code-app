@@ -1,0 +1,118 @@
+#Q1:
+spring_2026 = Trimester.find_by(year: '2026', term: 'Spring')
+
+CodingClass.all.each do |cclass|
+  Course.create!(
+    coding_class_id: cclass.id,
+    trimester_id: spring_2026.id,
+    max_enrollment: 30
+  )
+end
+
+#Q2:
+student = Student.create!(
+  first_name: "Sally",
+  last_name: "Giraffe",
+  email: "saly.giraffe@example.com"
+)
+
+intro_class = CodingClass.find_by(title: "Intro to Programming")
+intro_course = Course.find_by(
+  coding_class_id: intro_class.id,
+  trimester_id: spring_2026.id
+)
+
+enrollment = Enrollment.create!(
+  student_id: student.id,
+  course_id: intro_course.id
+)
+
+mentor = Mentor.all.find do |m|
+  MentorEnrollmentAssignment.where(mentor_id: m.id).count <= 2
+end
+
+MentorEnrollmentAssignment.create!(
+  mentor_id: mentor.id,
+  enrollment_id: enrollment.id
+)
+
+# Q3: - Description:
+
+# Peace of Mind (POM): Grow Where You Are Planted is a journaling, gardening, and tracking application focused on emotional wellness, internal reflection, and nurturing routines like gardening and cooking. It’s designed for individuals such as moms with grown children, or anyone else who may be rediscovering themselves and on a journey towards building a life centered around peace, intention, and creativity. 
+
+# Allows users to track what/when/why they plant in their garden, log personal reflections(wins/struggles/gratitude/random thoughts), and save meaningful recipes. Also a feature to respond to shadow work writing prompts for deep emotional self-exploration.
+
+# Q4: - Features
+
+# Users:
+# - Right now, it's only for a single user. In the future, I hope to create support for multiple users.
+
+# Core features?
+# - Add plants and track when/where they are planted.
+# - Create journal entries and categorize them (e.g., "Life Wins," "Troubled Times," "Gratitude," "Random Thoughts").
+# - Save and tag recipes, along with notes and meal memories.
+# - View a list of shadow work prompts and select which to respond to.
+# - Create journal entries in response to selected prompts or freewriting.
+# - View past gardens/garden activities, reflections, and meals as part of their Peace of Mind(POM) journey.
+
+#Q5: - Data Model
+
+# users
+# - id
+# - name
+# - email
+
+# plants
+# - id
+# - name
+# - description
+# - planting_instructions
+
+# plantings
+# - id
+# - user_id
+# - plant_id
+# - location
+# - date_planted
+# - season
+# - notes
+
+# recipes
+# - id
+# - user_id
+# - title
+# - ingredients
+# - instructions
+# - notes
+# - shared_with (optional)
+
+# journal_entries
+# - id
+# - user_id
+# - title
+# - content
+# - category (enum: life_win, troubled_time, random_thought, gratitude)
+# - date
+# - prompt_id (nullable – used when responding to a prompt)
+
+# prompts
+# - id
+# - theme
+# - text
+
+# tags
+# - id
+# - name
+
+# entry_tags (join table)
+# - id
+# - journal_entry_id
+# - tag_id
+
+# Associations:
+# - User has many Plantings, Recipes, and JournalEntries
+# - Planting belongs to User and Plant
+# - JournalEntry belongs to User, optionally belongs to a Prompt, and has many Tags through EntryTags
+# - Recipe belongs to User
+# - Prompt has many JournalEntries
+# - Tag has many JournalEntries through EntryTags
