@@ -1,0 +1,47 @@
+# 1. What tables do you need to add? Decide on table names and their associations to each other and any existing tables/models. 
+- Add two tables:
+  - `topics` table to store the list of individual topics.
+  - `lesson_topics` join table to connect `topics` and `lessons`.
+
+  - Associations:
+  - A `Lesson` has many `topics` through `lesson_topics`.
+  - A `Topic` has many `lessons` through `lesson_topics`.
+  - The join table `lesson_topics` belongs to `lesson` and `topic`.
+
+# 2. What columns are necessary for the associations you decided on?
+- `topics` table:
+  - `title` (string): to store the name of each topic.
+
+-  `lesson_topics` table:
+  - `lesson_id`: foreign key to the `lessons` table.
+  - `topic_id`: foreign key to the `topics` table.
+
+# 3. What other columns (if any) need to be included on the tables? What other data needs to be stored?
+- Each table will also include:
+  - `created_at` and `updated_at` timestamps.
+  No other data needed.
+
+# 4. Write out each table's name and column names with data types.
+- topics
+    - `id` (integer, primary key, added automatically)
+    - `title` (string)
+    - `created_at` (datetime)
+    - `updated_at` (datetime)
+
+- lesson_topics
+    - `id` (integer, primary key, added automatically)
+    - `lesson_id` (integer, foreign key)
+    - `topic_id` (integer, foreign key)
+    - `created_at` (datetime)
+    - `updated_at` (datetime)
+
+# 5. Determine the generator command you'll need to create the migration file and run the command to generate the empty migration file. Start with just the topics migration. (Hint: your filename should be create_topics)
+```bash
+bin/rails generate migration create_topics
+
+
+
+
+
+
+
