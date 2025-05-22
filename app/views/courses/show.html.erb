@@ -32,9 +32,10 @@
   <%= form.hidden_field :mentor_id, value: 1 %> <!-- TEMP: Replace when mentor is logged in -->
 
   <div>
-    <%= form.label :enrollment_id, "Select Enrollment" %><br>
-    <%= form.collection_select :enrollment_id, @enrollments, :id, ->(e) { "#{e.student.first_name} #{e.student.last_name}" }, prompt: "Choose a student" %>
-  </div>
+  <%= form.label :student_id, "Select Student" %><br>
+  <%= form.collection_select :student_id, Student.all, :id, ->(s) { "#{s.first_name} #{s.last_name}" }, prompt: "Choose a student" %>
+</div>
+
 
   <div>
     <%= form.label :lesson_id, "Select Lesson" %><br>
@@ -42,8 +43,8 @@
   </div>
 
   <div>
-    <%= form.label :review_result, "Assignment Content" %><br>
-    <%= form.text_area :review_result %>
+    <%= form.label :content, "Assignment Content" %><br>
+    <%= form.text_area :content %>
   </div>
 
   <div>

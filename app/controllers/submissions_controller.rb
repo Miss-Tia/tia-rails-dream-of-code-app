@@ -29,8 +29,9 @@ class SubmissionsController < ApplicationController
   end
 
   private
-    # Only allow a list of trusted parameters through.
-    def submission_params
-      params.require(:submission).permit(:lesson_id, :enrollment_id, :mentor_id, :review_result, :reviewed_at)
-    end
+
+  # Only allow a list of trusted parameters through.
+  def submission_params
+    params.require(:submission).permit(:lesson_id, :student_id, :mentor_id, :content, :reviewed_at)
+  end
 end

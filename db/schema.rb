@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_22_025532) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_22_233148) do
   create_table "coding_classes", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -90,6 +90,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_22_025532) do
     t.integer "mentor_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.text "content"
     t.index ["lesson_id"], name: "index_submissions_on_lesson_id"
     t.index ["mentor_id"], name: "index_submissions_on_mentor_id"
     t.index ["student_id"], name: "index_submissions_on_student_id"
