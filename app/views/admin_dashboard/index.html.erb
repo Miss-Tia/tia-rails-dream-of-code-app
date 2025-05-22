@@ -1,5 +1,7 @@
 <h1>Dashboard</h1>
 
+<%= link_to "Add New Course", new_course_path, class: "btn btn-primary" %>
+
 <% if @current_trimester %>
   <h2><%= "#{@current_trimester.term} - #{@current_trimester.year}" %></h2>
   <ul>

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_08_041406) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_22_025532) do
   create_table "coding_classes", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -84,6 +84,17 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_08_041406) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "submissions", force: :cascade do |t|
+    t.integer "lesson_id", null: false
+    t.integer "student_id", null: false
+    t.integer "mentor_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["lesson_id"], name: "index_submissions_on_lesson_id"
+    t.index ["mentor_id"], name: "index_submissions_on_mentor_id"
+    t.index ["student_id"], name: "index_submissions_on_student_id"
+  end
+
   create_table "topics", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -110,4 +121,7 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_08_041406) do
   add_foreign_key "lessons", "courses"
   add_foreign_key "mentor_enrollment_assignments", "enrollments"
   add_foreign_key "mentor_enrollment_assignments", "mentors"
+  add_foreign_key "submissions", "lessons"
+  add_foreign_key "submissions", "mentors"
+  add_foreign_key "submissions", "students"
 end

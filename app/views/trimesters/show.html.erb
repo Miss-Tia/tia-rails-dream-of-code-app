@@ -1,4 +1,11 @@
+<% if flash[:notice] %>
+  <div class="alert alert-success">
+    <%= flash[:notice] %>
+  </div>
+<% end %>
+
 <h1><%= @trimester.term %> <%= @trimester.year %></h1>
 <p>Start Date: <%= @trimester.start_date %></p>
 <p>End Date: <%= @trimester.end_date %></p>
 <p>Application Deadline: <%= @trimester.application_deadline %></p>
+

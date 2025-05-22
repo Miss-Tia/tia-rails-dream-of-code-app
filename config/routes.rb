@@ -6,7 +6,9 @@ Rails.application.routes.draw do
   resources :lessons
   resources :courses
   resources :coding_classes
-  resources :courses, only: [:show]
+  resources :trimesters, only: %i[index show edit update]
+  resources :submissions, only: [:create]
+
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -19,7 +21,5 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   root 'home#index'
-  get '/trimesters', to: 'trimesters#index'
-  get '/trimesters/:id', to: 'trimesters#show'
   get '/dashboard', to: 'admin_dashboard#index'
 end

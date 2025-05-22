@@ -6,11 +6,16 @@ class CoursesController < ApplicationController
   end
 
   def show
+    @course = Course.find(params[:id])
     @students = @course.students
+    @lessons = @course.lessons
+    @enrollments = @course.enrollments
   end
 
   def new
     @course = Course.new
+    @coding_classes = CodingClass.all
+    @trimesters = Trimester.all
   end
 
   def edit; end
