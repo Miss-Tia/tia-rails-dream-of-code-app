@@ -13,6 +13,19 @@ class TrimestersController < ApplicationController
   end
 
   def update
+    return head :bad_request if params[:trimester].nil?
+
+    deadline = params[:trimester][:application_deadline]
+
+    if deadline.present?
+      begin
+        parsed_date = Date.parse(deadline)
+      rescue ArgumentError
+        return head :bad_request
+      end
+      @trimester.application_deadline = parsed_date
+    end
+
     if @trimester.update(trimester_params)
       redirect_to @trimester, notice: 'Trimester updated successfully!'
     else
@@ -23,7 +36,8 @@ class TrimestersController < ApplicationController
   private
 
   def set_trimester
-    @trimester = Trimester.find(params[:id])
+    @trimester = Trimester.find_by(id: params[:id])
+    head :not_found unless @trimester
   end
 
   def trimester_params

@@ -28,7 +28,7 @@
 
 <h2>Submit an Assignment</h2>
 
-<%= form_with model: Submission.new, url: submissions_path(course_id: @course.id), local: true do |form| %>
+<%= form_with model: Submission.new, url: course_submissions_path(@course), local: true do |form| %>
   <%= form.hidden_field :mentor_id, value: 1 %> <!-- TEMP: Replace when mentor is logged in -->
 
   <div>
