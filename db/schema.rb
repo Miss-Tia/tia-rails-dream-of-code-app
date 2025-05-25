@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_05_24_202141) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_25_171630) do
   create_table "coding_classes", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -84,17 +84,14 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_24_202141) do
   end
 
   create_table "submissions", force: :cascade do |t|
+    t.integer "enrollment_id", null: false
     t.integer "lesson_id", null: false
-    t.integer "student_id", null: false
-    t.integer "mentor_id", null: false
-    t.integer "course_id", null: false
     t.text "content"
+    t.string "url"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["course_id"], name: "index_submissions_on_course_id"
+    t.index ["enrollment_id"], name: "index_submissions_on_enrollment_id"
     t.index ["lesson_id"], name: "index_submissions_on_lesson_id"
-    t.index ["mentor_id"], name: "index_submissions_on_mentor_id"
-    t.index ["student_id"], name: "index_submissions_on_student_id"
   end
 
   create_table "topics", force: :cascade do |t|
@@ -124,8 +121,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_05_24_202141) do
   add_foreign_key "lessons", "courses"
   add_foreign_key "mentor_enrollment_assignments", "enrollments"
   add_foreign_key "mentor_enrollment_assignments", "mentors"
-  add_foreign_key "submissions", "courses"
+  add_foreign_key "submissions", "enrollments"
   add_foreign_key "submissions", "lessons"
-  add_foreign_key "submissions", "mentors"
-  add_foreign_key "submissions", "students"
 end

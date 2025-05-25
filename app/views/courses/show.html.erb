@@ -27,27 +27,4 @@
 </div>
 
 <h2>Submit an Assignment</h2>
-
-<%= form_with model: Submission.new, url: course_submissions_path(@course), local: true do |form| %>
-  <%= form.hidden_field :mentor_id, value: 1 %> <!-- TEMP: Replace when mentor is logged in -->
-
-  <div>
-  <%= form.label :student_id, "Select Student" %><br>
-  <%= form.collection_select :student_id, Student.all, :id, ->(s) { "#{s.first_name} #{s.last_name}" }, prompt: "Choose a student" %>
-</div>
-
-
-  <div>
-    <%= form.label :lesson_id, "Select Lesson" %><br>
-    <%= form.collection_select :lesson_id, @lessons, :id, :title, prompt: "Choose a lesson" %>
-  </div>
-
-  <div>
-    <%= form.label :content, "Assignment Content" %><br>
-    <%= form.text_area :content %>
-  </div>
-
-  <div>
-    <%= form.submit "Submit Assignment" %>
-  </div>
-<% end %>
+<%= link_to "Submit Assignment", new_course_submission_path(@course), class: "btn btn-primary" %>

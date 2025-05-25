@@ -1,23 +1,22 @@
 class SubmissionsController < ApplicationController
-  # GET /submissions/new
+  # GET /courses/:course_id/submissions/new
   def new
     @course = Course.find(params[:course_id])
     @submission = Submission.new
     @lessons = @course.lessons
-    @students = Student.all
+    @enrollments = @course.enrollments.includes(:student)
   end
 
   # POST /courses/:course_id/submissions
   def create
     @course = Course.find(params[:course_id])
     @submission = Submission.new(submission_params)
-    @submission.course = @course
 
     if @submission.save
       redirect_to course_path(@course), notice: 'Submission was successfully created.'
     else
       @lessons = @course.lessons
-      @students = Student.all
+      @enrollments = @course.enrollments.includes(:student)
       render :new, status: :unprocessable_entity
     end
   end
@@ -35,6 +34,6 @@ class SubmissionsController < ApplicationController
   private
 
   def submission_params
-    params.require(:submission).permit(:lesson_id, :student_id, :mentor_id, :content, :reviewed_at)
+    params.require(:submission).permit(:enrollment_id, :lesson_id, :content, :url)
   end
 end
