@@ -1,5 +1,3 @@
-<p style="color: green"><%= notice %></p>
-
 <% content_for :title, "Enrollments" %>
 
 <h1>Enrollments</h1>
@@ -13,4 +11,7 @@
   <% end %>
 </div>
 
-<%= link_to "New enrollment", new_enrollment_path %>
+<p>To enroll a student, visit the course page and click “Enroll a new student.”</p>
+<p>
+  <%= link_to "Back to courses", courses_path %>
+

@@ -15,7 +15,7 @@
 <% end %>
 
 <p>
-  <a href="#">Enroll a new student</a> <!-- Placeholder link for future feature -->
+  <%= link_to "Enroll a new student", new_course_enrollment_path(@course) %>
 </p>
 <h3>Student Email List</h3>
 <pre><%= @course.student_email_list.join(". ") %></pre>

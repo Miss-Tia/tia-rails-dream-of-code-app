@@ -1,5 +1,6 @@
 class TrimestersController < ApplicationController
   before_action :set_trimester, only: %i[show edit update]
+  before_action :require_admin, only: %i[edit update]
 
   def index
     @trimesters = Trimester.all
@@ -9,7 +10,7 @@ class TrimestersController < ApplicationController
   end
 
   def edit
-    # Renders the edit form
+    # @trimester is already set by before_action
   end
 
   def update

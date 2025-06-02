@@ -1,17 +1,16 @@
 <div id="<%= dom_id enrollment %>">
   <p>
     <strong>Course:</strong>
-    <%= enrollment.course_id %>
+    <%= enrollment.course.coding_class.title %>
   </p>
 
   <p>
     <strong>Student:</strong>
-    <%= enrollment.student_id %>
+    <%= enrollment.student.name %>
   </p>
 
   <p>
     <strong>Final grade:</strong>
     <%= enrollment.final_grade %>
   </p>
-
 </div>
