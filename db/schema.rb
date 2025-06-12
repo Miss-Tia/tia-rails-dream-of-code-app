@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2025_04_08_041406) do
+ActiveRecord::Schema[8.0].define(version: 2025_05_30_195746) do
   create_table "coding_classes", force: :cascade do |t|
     t.string "title"
     t.text "description"
@@ -51,7 +51,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_08_041406) do
     t.integer "course_id", null: false
     t.integer "lesson_number"
     t.string "title"
-    t.string "url"
     t.date "assignment_due_date"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -84,7 +83,19 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_08_041406) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "submissions", force: :cascade do |t|
+    t.integer "enrollment_id", null: false
+    t.integer "lesson_id", null: false
+    t.text "content"
+    t.string "url"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["enrollment_id"], name: "index_submissions_on_enrollment_id"
+    t.index ["lesson_id"], name: "index_submissions_on_lesson_id"
+  end
+
   create_table "topics", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "title"
@@ -101,6 +112,16 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_08_041406) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "users", force: :cascade do |t|
+    t.string "username", null: false
+    t.string "email", null: false
+    t.string "password_digest", null: false
+    t.string "role", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["username"], name: "index_users_on_username", unique: true
+  end
+
   add_foreign_key "courses", "coding_classes"
   add_foreign_key "courses", "trimesters"
   add_foreign_key "enrollments", "courses"
@@ -110,4 +131,6 @@ ActiveRecord::Schema[8.0].define(version: 2025_04_08_041406) do
   add_foreign_key "lessons", "courses"
   add_foreign_key "mentor_enrollment_assignments", "enrollments"
   add_foreign_key "mentor_enrollment_assignments", "mentors"
+  add_foreign_key "submissions", "enrollments"
+  add_foreign_key "submissions", "lessons"
 end

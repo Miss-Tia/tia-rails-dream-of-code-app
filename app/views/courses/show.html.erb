@@ -2,9 +2,29 @@
 
 <%= render @course %>
 
+<h2>Enrolled Students</h2>
+
+<% if @students.any? %>
+  <ul>
+    <% @students.each do |student| %>
+      <li><%= student.name %> - <%= student.email %></li>
+    <% end %>
+  </ul>
+<% else %>
+  <p>No students enrolled yet.</p>
+<% end %>
+
+<p>
+  <%= link_to "Enroll a new student", new_course_enrollment_path(@course) %>
+</p>
+<h3>Student Email List</h3>
+<pre><%= @course.student_email_list.join(". ") %></pre>
 <div>
   <%= link_to "Edit this course", edit_course_path(@course) %> |
   <%= link_to "Back to courses", courses_path %>
 
   <%= button_to "Destroy this course", @course, method: :delete %>
 </div>
+
+<h2>Submit an Assignment</h2>
+<%= link_to "Submit Assignment", new_course_submission_path(@course), class: "btn btn-primary" %>

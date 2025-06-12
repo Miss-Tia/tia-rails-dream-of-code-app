@@ -1,21 +1,40 @@
 Rails.application.routes.draw do
+  # session actions
+  get 'sessions/new'
+  get 'sessions/create'
+  get 'sessions/destroy'
+
+  # standard resources
   resources :students
   resources :mentors
-  resources :enrollments
+  resources :enrollments, except: %i[new create] # new/create are nested under courses
   resources :mentor_enrollment_assignments
   resources :lessons
-  resources :courses
   resources :coding_classes
-  # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
+  resources :trimesters, only: %i[index show edit update]
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
-  get "up" => "rails/health#show", as: :rails_health_check
+  # course nested resources
+  resources :courses do
+    resources :submissions, only: %i[new create edit update] # student submission form
+    resources :enrollments, only: %i[new create] # admin enrolling student into course
+  end
 
-  # Render dynamic PWA files from app/views/pwa/* (remember to link manifest in application.html.erb)
+  # for mentors to edit/update any submission
+  resources :submissions, only: %i[edit update]
+
+  # health check
+  get 'up' => 'rails/health#show', as: :rails_health_check
+
+  # optional: PWA setup
   # get "manifest" => "rails/pwa#manifest", as: :pwa_manifest
   # get "service-worker" => "rails/pwa#service_worker", as: :pwa_service_worker
 
-  # Defines the root path route ("/")
-  root "home#index"
+  # static routes
+  root 'home#index'
+  get '/dashboard', to: 'admin_dashboard#index'
+
+  # auth routes
+  get '/login', to: 'sessions#new'
+  post '/login', to: 'sessions#create'
+  delete '/logout', to: 'sessions#destroy'
 end

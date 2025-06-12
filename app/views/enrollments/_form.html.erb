@@ -1,32 +1,24 @@
-<%= form_with(model: enrollment) do |form| %>
-  <% if enrollment.errors.any? %>
-    <div style="color: red">
-      <h2><%= pluralize(enrollment.errors.count, "error") %> prohibited this enrollment from being saved:</h2>
-
+<%= form_with model: [@course, @enrollment], local: true do |f| %>
+  <% if @enrollment.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@enrollment.errors.count, "error") %> prohibited this enrollment from being saved:</h4>
       <ul>
-        <% enrollment.errors.each do |error| %>
-          <li><%= error.full_message %></li>
+        <% @enrollment.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
         <% end %>
       </ul>
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :course_id, style: "display: block" %>
-    <%= form.text_field :course_id %>
+  <div class="mb-3">
+    <%= f.label :student_id, 'Student' %>
+    <%= f.collection_select :student_id, @students, :id, :name, prompt: 'Select a student', class: "form-select" %>
   </div>
 
-  <div>
-    <%= form.label :student_id, style: "display: block" %>
-    <%= form.text_field :student_id %>
+  <div class="mb-3">
+    <%= f.label :final_grade %>
+    <%= f.text_field :final_grade, class: "form-control" %>
   </div>
 
-  <div>
-    <%= form.label :final_grade, style: "display: block" %>
-    <%= form.text_field :final_grade %>
-  </div>
-
-  <div>
-    <%= form.submit %>
-  </div>
+  <%= f.submit 'Enroll Student', class: "btn btn-primary" %>
 <% end %>

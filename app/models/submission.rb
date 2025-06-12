@@ -1,5 +1,6 @@
 class Submission < ApplicationRecord
+  belongs_to :enrollment
   belongs_to :lesson
-  belongs_to :student
-  belongs_to :mentor
+
+  validates :content, presence: true
 end
