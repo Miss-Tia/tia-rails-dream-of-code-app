@@ -38,3 +38,36 @@ RSpec.describe 'Courses', type: :request do
     end
   end
 end
+
+RSpec.describe 'Api::V1::Courses', type: :request do
+  describe 'GET /api/v1/courses' do
+    let(:trimester) do
+      Trimester.create!(
+        year: '2025',
+        term: 'Spring',
+        start_date: Date.new(2025, 3, 5),
+        end_date: Date.new(2025, 6, 18),
+        application_deadline: Date.new(2025, 2, 15),
+        current: true
+      )
+    end
+
+    let(:coding_class) do
+      CodingClass.create!(title: 'Ruby on Rails', description: 'Backend framework')
+    end
+
+    let!(:course) do
+      Course.create!(coding_class: coding_class, trimester: trimester, max_enrollment: 20)
+    end
+
+    it 'returns a JSON response with the current trimester courses' do
+      get '/api/v1/courses'
+
+      expect(response).to have_http_status(:ok)
+
+      json = JSON.parse(response.body)
+      expect(json['courses']).to be_an(Array)
+      expect(json['courses'].first['title']).to eq('Ruby on Rails')
+    end
+  end
+end
