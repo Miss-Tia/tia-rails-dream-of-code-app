@@ -37,4 +37,12 @@ Rails.application.routes.draw do
   get '/login', to: 'sessions#new'
   post '/login', to: 'sessions#create'
   delete '/logout', to: 'sessions#destroy'
+
+  # API routes
+  namespace :api do
+    namespace :v1 do
+      get '/courses', to: 'courses#index'
+      get '/courses/:course_id/enrollments', to: 'enrollments#index'
+    end
+  end
 end
