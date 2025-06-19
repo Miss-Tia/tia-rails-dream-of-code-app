@@ -81,11 +81,21 @@ RSpec.describe 'Api::V1::Enrollments', type: :request do
       get "/api/v1/courses/#{current_course.id}/enrollments"
 
       expect(response).to have_http_status(:ok)
-      expect(JSON.parse(response.body)['enrollments']).to be_an(Array)
-      expect(JSON.parse(response.body)['enrollments'].size).to eq(2)
-      expect(JSON.parse(response.body)['enrollments'].map do |el|
-        el['id']
-      end).to eq([current_student1.id, current_student2.id])
+      json = JSON.parse(response.body)
+
+      expect(json['enrollments']).to be_an(Array)
+      expect(json['enrollments'].size).to eq(2)
+
+      student_ids = json['enrollments'].map { |e| e['studentId'] }
+      expect(student_ids).to match_array([current_student1.id, current_student2.id])
+
+      json['enrollments'].each do |enrollment|
+        expect(enrollment).to include('id')
+        expect(enrollment).to include('studentId')
+        expect(enrollment).to include('studentFirstName')
+        expect(enrollment).to include('studentLastName')
+        expect(enrollment).to include('finalGrade')
+      end
     end
   end
 end

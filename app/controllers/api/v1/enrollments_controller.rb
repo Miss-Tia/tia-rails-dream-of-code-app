@@ -6,9 +6,10 @@ class Api::V1::EnrollmentsController < ApplicationController
     enrollment_data = enrollments.map do |enrollment|
       {
         id: enrollment.id,
-        student_name: "#{enrollment.student.first_name} #{enrollment.student.last_name}",
-        student_email: enrollment.student.email,
-        enrolled_at: enrollment.created_at.strftime('%Y-%m-%d')
+        studentId: enrollment.student.id,
+        studentFirstName: enrollment.student.first_name,
+        studentLastName: enrollment.student.last_name,
+        finalGrade: enrollment.final_grade || ''
       }
     end
 

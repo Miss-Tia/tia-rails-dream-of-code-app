@@ -1,7 +1,6 @@
 class Api::V1::CoursesController < ApplicationController
   def index
-    current_trimester = Trimester.find_by(current: true)
-
+    current_trimester = Trimester.current
     courses = current_trimester ? current_trimester.courses : []
 
     courses_array = courses.map do |course|
